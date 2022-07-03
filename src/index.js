@@ -17,7 +17,7 @@ const putInputForCountry = debounce(
                     return `<li class = 'country'><img src=${country.flags.svg} width=''>${country.name.official}</li>`
                });
                 
-                if (+countryList.length < 10 && +countryList.length > 2)
+                if (+countryList.length <= 10 && +countryList.length >= 2)
                 {
                     countryDiv.innerHTML = '';
                     countryUl.innerHTML = `${countryList.join('')}`;
