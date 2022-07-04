@@ -8,6 +8,17 @@ const searchInput = document.querySelector('#search-box');
 const countryUl = document.querySelector('.country-list');
 const countryDiv = document.querySelector('.country-info');
 
+const getInfoCountry = (countrys) => {
+countryUl.innerHTML = '';
+                    countryDiv.innerHTML = `${countrys.map(country => { 
+                        const arrayLanguages = [].concat(Object.values(country.languages)); 
+                         
+                            return `<ul><li class = 'country finded'><img src=${country.flags.svg} width=''>${country.name.official}</li>
+              <li class = 'country finded'><b>Capital:</b> ${country.capital}</li>
+              <li class = 'country finded'><b>Population:</b> ${country.population}</li>
+              <li class = 'country finded'><b>Languages:</b> ${arrayLanguages.join(', ')}</li></ul>`})}`
+};
+
 const putInputForCountry = debounce(
     (e) => {
    if (e.target.value.trim() != '') {
@@ -17,27 +28,21 @@ const putInputForCountry = debounce(
                     return `<li class = 'country'><img src=${country.flags.svg} width=''>${country.name.official}</li>`
                });
                 
-                if (+countryList.length <= 10 && +countryList.length >= 2)
+                if (countryList.length <= 10 && countryList.length >= 2)
                 {
                     countryDiv.innerHTML = '';
                     countryUl.innerHTML = `${countryList.join('')}`;
                 }
 
-                else if (+countryList.length > 10) {
+                else if (countryList.length > 10) {
                     countryUl.innerHTML = '';
                     Notify.info('Too many matches found. Please enter a more specific name.');
                 }
     
                 else {
-                     
-                    countryUl.innerHTML = '';
-                    countryDiv.innerHTML = `${countrys.map(country => { 
-                        const arrayLanguages = [].concat(Object.values(country.languages)); 
-                         
-                            return `<ul><li class = 'country finded'><img src=${country.flags.svg} width=''>${country.name.official}</li>
-              <li class = 'country finded'><b>Capital:</b> ${country.capital}</li>
-              <li class = 'country finded'><b>Population:</b> ${country.population}</li>
-              <li class = 'country finded'><b>Languages:</b> ${arrayLanguages.join(', ')}</li></ul>`})}`
+                
+                getInfoCountry(countrys)
+                    
               }}).catch(error => Notify.failure(`${error}`));
            }
                   
